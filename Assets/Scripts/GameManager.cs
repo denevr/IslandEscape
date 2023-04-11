@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private UIManager UIManager;
     [SerializeField] private LevelManager levelManager;
+    [SerializeField] private InputManager inputManager;
 
     void Start()
     {
@@ -13,5 +14,6 @@ public class GameManager : MonoBehaviour
 
         int levelIndex = PlayerPrefs.GetInt(PlayerPrefsConstants.playerLevel, 0);
         levelManager.StartLevel(levelIndex);
+        inputManager.isInputEnabled = true;
     }
 }
