@@ -5,12 +5,16 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
     public Transform[] stickmanPositions;
+    //public Stickman[] stickmans;
+    public Stack<Stickman> stickmanStack;
     public bool isCompleted;
 
-    private bool isSelected;
+    private bool isSelected; //
 
     void OnEnable()
     {
+        //stickmans = new Stickman[stickmanPositions.Length];
+        stickmanStack = new Stack<Stickman>();
         isCompleted = false;
         isSelected = false;
     }
@@ -29,5 +33,10 @@ public class Platform : MonoBehaviour
         var pos = transform.position;
         pos.y -= .5f;
         transform.position = pos;
+    }
+
+    public void CreateBridgeTo(Platform platform)
+    {
+        
     }
 }

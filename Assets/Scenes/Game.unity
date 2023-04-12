@@ -651,10 +651,9 @@ MonoBehaviour:
   levelDatas:
   - {fileID: 11400000, guid: 896cde7b0f2c49d47b5b2762aeeb51f5, type: 2}
   _colorPalette: {fileID: 1534440650}
-  materialSelector: {fileID: 0}
   _water: {fileID: 506304887}
   _platformPrefab: {fileID: 7860244227216861701, guid: b3d040b334ea4b84e971624203c584e6, type: 3}
-  _stickmanPrefab: {fileID: 8592876449704463762, guid: d76e3a17902c8d447a3cb11bab35d851, type: 3}
+  _stickmanPrefab: {fileID: 4403176042765711085, guid: ce726c9c09c151a49bdaed9e224cac77, type: 3}
   _platformParent: {fileID: 1468863380}
 --- !u!114 &1534440650
 MonoBehaviour:

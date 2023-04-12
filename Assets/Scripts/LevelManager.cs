@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private Transform _platformParent;
 
+    private const int stickmanCountInLine = 4;
+
     void Start()
     {
         _water.SetActive(true);
@@ -40,15 +42,21 @@ public class LevelManager : MonoBehaviour
 
         for (int i = 0; i < platformColorCount; i++)
         {
-            var count = 4;
+            var count = stickmanCountInLine;
             var color = platformData.Colors[i];
 
             while (count > 0)
             {
-                var stickman = LeanPool.Spawn(_stickmanPrefab, platform.transform);
-                stickman.transform.position = platform.stickmanPositions[index].position;
+                var go = LeanPool.Spawn(_stickmanPrefab, platform.stickmanPositions[index]);
+                go.transform.position = platform.stickmanPositions[index].position;
+
+                var stickman = go.GetComponent<Stickman>();
                 var mat = _colorPalette.GetMaterialFromColor(color);
-                stickman.GetComponent<Stickman>()?.SetColorMaterial(mat);
+                stickman.SetColorMaterial(mat);
+                //Debug.LogError((stickmanCountInLine - count) * i);
+                //platform.stickmans[(stickmanCountInLine - count) * i] = stickman;
+                platform.stickmanStack.Push(stickman);
+
                 index++;
                 count--;
             }
