@@ -9,7 +9,17 @@ public class Platform : MonoBehaviour
     public Stack<Stickman> stickmanStack;
     public bool isCompleted;
 
+    [SerializeField] private Transform _bridgeConnectionPoint;
+
     private bool isSelected; //
+    private LineRenderer _lineRenderer;
+    private const int lengthOfLineRenderer = 2;
+    private readonly Vector3 offsetVector = new Vector3(0, .25f, 0);
+
+    void Awake()
+    {
+        _lineRenderer = GetComponent<LineRenderer>();
+    }
 
     void OnEnable()
     {
@@ -17,6 +27,7 @@ public class Platform : MonoBehaviour
         stickmanStack = new Stack<Stickman>();
         isCompleted = false;
         isSelected = false;
+        _lineRenderer.enabled = false;
     }
 
     public void OnSelected()
@@ -35,8 +46,22 @@ public class Platform : MonoBehaviour
         transform.position = pos;
     }
 
-    public void CreateBridgeTo(Platform platform)
+    public void SetReadyForConnecting()
     {
-        
+        var platformCenterPos = Vector3.zero + offsetVector;
+        var points = new Vector3[lengthOfLineRenderer] { platformCenterPos, _bridgeConnectionPoint.localPosition };
+
+        _lineRenderer.SetPositions(points);
+        _lineRenderer.enabled = true;
+    }
+
+    public void TerminateConnection()
+    {
+        _lineRenderer.enabled = false;
+    }
+
+    public Vector3 GetConnectionPoint()
+    {
+        return _bridgeConnectionPoint.position;
     }
 }

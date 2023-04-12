@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     [HideInInspector] public bool isInputEnabled;
 
     [SerializeField] private Camera _camera;
+    [SerializeField] private BridgeConstructor _bridgeConstructor;
 
     private Platform _selectedPlatform;
 
@@ -41,6 +42,10 @@ public class InputManager : MonoBehaviour
                             isInputEnabled = false; // enable after stickman flow completed
                             _selectedPlatform.OnDeselected();
                             // TODO: Perform stickman flow from first platform to second.
+                            //_selectedPlatform.SetReadyForConnecting();
+                            //platform.SetReadyForConnecting();
+                            _bridgeConstructor.CreateBridgeBetween(_selectedPlatform, platform);
+
                             _selectedPlatform = null; //if flow is possible
                         }
                         else
