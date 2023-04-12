@@ -7,5 +7,5 @@ public class PlatformData
 {
     public Vector3 Position;
     public Quaternion Rotation;
-    public Color[] Colors;
+    public Colors[] Colors;
 }

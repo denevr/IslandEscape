@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     public List<LevelData> levelDatas;
 
+    [SerializeField] private ColorPalette _colorPalette;
     [SerializeField] private GameObject _water;
     [SerializeField] private Platform _platformPrefab;
     [SerializeField] private GameObject _stickmanPrefab;
@@ -40,11 +41,14 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < platformColorCount; i++)
         {
             var count = 4;
+            var color = platformData.Colors[i];
 
             while (count > 0)
             {
                 var stickman = LeanPool.Spawn(_stickmanPrefab, platform.transform);
                 stickman.transform.position = platform.stickmanPositions[index].position;
+                var mat = _colorPalette.GetMaterialFromColor(color);
+                stickman.GetComponent<Stickman>()?.SetColorMaterial(mat);
                 index++;
                 count--;
             }

@@ -41,7 +41,7 @@ public class InputManager : MonoBehaviour
                             isInputEnabled = false; // enable after stickman flow completed
                             _selectedPlatform.OnDeselected();
                             // TODO: Perform stickman flow from first platform to second.
-                            _selectedPlatform = null;
+                            _selectedPlatform = null; //if flow is possible
                         }
                         else
                         {
