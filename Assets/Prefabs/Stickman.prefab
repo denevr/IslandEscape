@@ -596,6 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _smr: {fileID: 6983118204299865874}
+  _animator: {fileID: 1196575009480717337}
 --- !u!1 &4749501524755762503
 GameObject:
   m_ObjectHideFlags: 0

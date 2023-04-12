@@ -53,9 +53,11 @@ public class LevelManager : MonoBehaviour
                 var stickman = go.GetComponent<Stickman>();
                 var mat = _colorPalette.GetMaterialFromColor(color);
                 stickman.SetColorMaterial(mat);
+                stickman.SetColor(color);
                 //Debug.LogError((stickmanCountInLine - count) * i);
                 //platform.stickmans[(stickmanCountInLine - count) * i] = stickman;
-                platform.stickmanStack.Push(stickman);
+                platform.stickmans.Add(stickman);
+                //platform.stickmanStack.Push(stickman);
 
                 index++;
                 count--;

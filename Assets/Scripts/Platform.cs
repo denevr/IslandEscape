@@ -5,8 +5,8 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
     public Transform[] stickmanPositions;
-    //public Stickman[] stickmans;
-    public Stack<Stickman> stickmanStack;
+    public List<Stickman> stickmans;
+    //public Stack<Stickman> stickmanStack;
     public bool isCompleted;
 
     [SerializeField] private Transform _bridgeConnectionPoint;
@@ -24,7 +24,8 @@ public class Platform : MonoBehaviour
     void OnEnable()
     {
         //stickmans = new Stickman[stickmanPositions.Length];
-        stickmanStack = new Stack<Stickman>();
+        stickmans = new List<Stickman>();
+        //stickmanStack = new Stack<Stickman>();
         isCompleted = false;
         isSelected = false;
         _lineRenderer.enabled = false;
@@ -63,5 +64,48 @@ public class Platform : MonoBehaviour
     public Vector3 GetConnectionPoint()
     {
         return _bridgeConnectionPoint.position;
+    }
+
+    public List<Stickman> GetTransferableStickmans()
+    {
+        List<Stickman> stickmansToMove = new List<Stickman>();
+        var color = GetLastStickmanColor();
+
+        //while (stickmanStack.Peek().GetColor() == color)
+        //{
+        //    stickmansToMove.Add(stickmanStack.Pop());
+        //}
+
+        //return stickmansToMove;
+
+
+        for (int i = stickmans.Count; i > 0; i--)
+        {
+            var stickman = stickmans[i - 1];
+
+            if (stickman.GetColor() == color)
+                stickmansToMove.Add(stickman);
+            else
+                break;
+        }
+
+        return stickmansToMove;
+    }
+
+    public Colors GetLastStickmanColor()
+    {
+        //return stickmanStack.Peek().GetColor();
+        return stickmans[stickmans.Count - 1].GetColor();
+    }
+
+    public int GetNextPositionIndex()
+    {
+        for (int i = 0; i < stickmanPositions.Length; i++)
+        {
+            if (stickmanPositions[i].transform.childCount == 0)
+                return i;
+        }
+
+        return -1;
     }
 }
