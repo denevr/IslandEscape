@@ -24,7 +24,6 @@ public class StickmanFlowController : MonoBehaviour
             if (endPlatform.GetLastStickmanColor() != Colors.None) return false;
         }
 
-        Debug.LogError("Flow available!");
         return true;
     }
 
@@ -64,14 +63,17 @@ public class StickmanFlowController : MonoBehaviour
                     stickmansMoved++;
 
                     if (stickmansMoved == stickmansToMove)
+                    {
                         _bridgeController.RemoveBridgeBetween(startPlatform, endPlatform);
+                        CheckLevelEnd();
+                    }
                 });
         }
 
         if (endPlatform.IsFullyLoadedWithStickmansOfSameColor())
         {
             endPlatform.Lock();
-            CheckLevelEnd();
+            //CheckLevelEnd();
         }
 
         //inputManager.isInputEnabled = true;

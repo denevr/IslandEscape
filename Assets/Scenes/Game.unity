@@ -302,7 +302,7 @@ MonoBehaviour:
   notification: 3
   strategy: 0
   preload: 0
-  capacity: 4
+  capacity: 6
   recycle: 0
   persist: 0
   stamp: 0
@@ -342,7 +342,7 @@ MonoBehaviour:
   notification: 3
   strategy: 0
   preload: 0
-  capacity: 32
+  capacity: 48
   recycle: 0
   persist: 0
   stamp: 0
@@ -925,6 +925,7 @@ MonoBehaviour:
   levelDatas:
   - {fileID: 11400000, guid: 896cde7b0f2c49d47b5b2762aeeb51f5, type: 2}
   - {fileID: 11400000, guid: 6c772837fe21e844cba2c1c0882fa8a1, type: 2}
+  - {fileID: 11400000, guid: e9230d7213e2b3d49949dd31c833c0c2, type: 2}
   _colorPalette: {fileID: 1534440650}
   _water: {fileID: 506304887}
   _platformPrefab: {fileID: 7860244227216861701, guid: b3d040b334ea4b84e971624203c584e6, type: 3}
