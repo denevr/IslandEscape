@@ -61,7 +61,6 @@ public class LevelManager : MonoBehaviour
                 //Debug.LogError((stickmanCountInLine - count) * i);
                 //platform.stickmans[(stickmanCountInLine - count) * i] = stickman;
                 platform.stickmans.Add(stickman);
-                //platform.stickmanStack.Push(stickman);
 
                 index++;
                 count--;

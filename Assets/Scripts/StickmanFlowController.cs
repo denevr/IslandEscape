@@ -43,6 +43,7 @@ public class StickmanFlowController : MonoBehaviour
             var placementPos = endPlatform.stickmanPositions[endPlatform.GetNextPositionIndex()];
             var stickman = stickmans[i];
             stickman.transform.SetParent(placementPos);
+            startPlatform.RemoveStickmanToPlatform(stickman);
             endPlatform.AddStickmanToPlatform(stickman);
             Vector3[] path = new[] { stickman.transform.position, startPos, endPos, placementPos.position };
 
@@ -79,15 +80,15 @@ public class StickmanFlowController : MonoBehaviour
 
         for (int i = 0; i < platforms.Count; i++)
         {
-            if (platforms[i].IsFullyLoadedWithStickmansOfSameColor() ||
-                platforms[i].stickmans.Count == 0)
+            if (platforms[i].stickmans.Count == 0 ||
+                platforms[i].IsFullyLoadedWithStickmansOfSameColor())
                 continue;
             else
-            {
-                Debug.LogError("level ended");
-                levelManager.PlayNextLevel();
-                inputManager.isInputEnabled = false;
-            }
+                return;
         }
+
+        Debug.LogError("level ended");
+        levelManager.PlayNextLevel();
+        inputManager.isInputEnabled = false;
     }
 }

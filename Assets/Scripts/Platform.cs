@@ -78,14 +78,6 @@ public class Platform : MonoBehaviour
         List<Stickman> stickmansToMove = new List<Stickman>();
         var color = GetLastStickmanColor();
 
-        //while (stickmanStack.Peek().GetColor() == color)
-        //{
-        //    stickmansToMove.Add(stickmanStack.Pop());
-        //}
-
-        //return stickmansToMove;
-
-
         for (int i = stickmans.Count; i > 0; i--)
         {
             var stickman = stickmans[i - 1];
@@ -101,7 +93,6 @@ public class Platform : MonoBehaviour
 
     public Colors GetLastStickmanColor()
     {
-        //return stickmanStack.Peek().GetColor();
         return stickmans[stickmans.Count - 1].GetColor();
     }
 
@@ -119,6 +110,11 @@ public class Platform : MonoBehaviour
     public void AddStickmanToPlatform(Stickman stickman)
     {
         stickmans.Add(stickman);
+    }
+
+    public void RemoveStickmanToPlatform(Stickman stickman)
+    {
+        stickmans.Remove(stickman);
     }
 
     public bool IsFullyLoadedWithStickmansOfSameColor()
@@ -141,7 +137,6 @@ public class Platform : MonoBehaviour
         _boxCollider.enabled = false;
 
         var color = GetLastStickmanColor();
-        //var mat = _colorPalette.GetMaterialFromColor(color);
         var mats = _flagMeshRenderer.materials;
         mats[0] = _colorPalette.GetMaterialFromColor(color); ;
         _flagMeshRenderer.materials = mats;

@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 333571861}
   - component: {fileID: 333571860}
-  - component: {fileID: 333571862}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -171,21 +170,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &333571862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 333571859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98df9fa3d356154aa7e709b847c8f6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bridgeController: {fileID: 1269766722}
-  inputManager: {fileID: 1737198492}
-  levelManager: {fileID: 1534440649}
 --- !u!1 &506304887
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +501,53 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &1190045797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1190045799}
+  - component: {fileID: 1190045798}
+  m_Layer: 0
+  m_Name: StickmanFlowController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1190045798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190045797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98df9fa3d356154aa7e709b847c8f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bridgeController: {fileID: 1269766722}
+  inputManager: {fileID: 1737198492}
+  levelManager: {fileID: 1534440649}
+--- !u!4 &1190045799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190045797}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1269766718
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,6 +840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelDatas:
   - {fileID: 11400000, guid: 896cde7b0f2c49d47b5b2762aeeb51f5, type: 2}
+  - {fileID: 11400000, guid: 6c772837fe21e844cba2c1c0882fa8a1, type: 2}
   _colorPalette: {fileID: 1534440650}
   _water: {fileID: 506304887}
   _platformPrefab: {fileID: 7860244227216861701, guid: b3d040b334ea4b84e971624203c584e6, type: 3}
@@ -977,7 +1009,7 @@ MonoBehaviour:
   isInputEnabled: 0
   _camera: {fileID: 963194227}
   _bridgeController: {fileID: 1269766722}
-  _stickmanFlowController: {fileID: 333571862}
+  _stickmanFlowController: {fileID: 1190045798}
 --- !u!4 &1737198493
 Transform:
   m_ObjectHideFlags: 0
