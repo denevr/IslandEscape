@@ -8,18 +8,21 @@ public class StickmanFlowController : MonoBehaviour
     [SerializeField] private BridgeController _bridgeController;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private LevelManager levelManager;
+    [SerializeField] private UIManager UIManager;
 
     private Vector3 offset = new Vector3(0, .25f, 0);
     private float _speed = 3f;
 
     public bool IsFlowAvailableBetween(Platform startPlatform, Platform endPlatform)
     {
-        //if (endPlatform.stickmanStack.Count == 16) return false;
-        //if (startPlatform.stickmanStack.Count == 0) return false;
         if (endPlatform.stickmans.Count == 16) return false;
         if (startPlatform.stickmans.Count == 0) return false;
-        if (startPlatform.GetLastStickmanColor() != endPlatform.GetLastStickmanColor()) return false;
         if (startPlatform.GetTransferableStickmans().Count > 16 - endPlatform.stickmans.Count) return false;
+
+        if (startPlatform.GetLastStickmanColor() != endPlatform.GetLastStickmanColor())
+        {
+            if (endPlatform.GetLastStickmanColor() != Colors.None) return false;
+        }
 
         Debug.LogError("Flow available!");
         return true;
@@ -87,8 +90,6 @@ public class StickmanFlowController : MonoBehaviour
                 return;
         }
 
-        Debug.LogError("level ended");
-        levelManager.PlayNextLevel();
-        inputManager.isInputEnabled = false;
+        UIManager.ShowLevelEndPanel();
     }
 }

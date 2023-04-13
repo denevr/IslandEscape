@@ -9,7 +9,8 @@ public enum Colors
     Yellow,
     Red,
     Orange,
-    Purple
+    Purple,
+    None
 }
 
 public class ColorPalette : MonoBehaviour

@@ -1,3 +1,4 @@
+using Lean.Pool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -93,7 +94,10 @@ public class Platform : MonoBehaviour
 
     public Colors GetLastStickmanColor()
     {
-        return stickmans[stickmans.Count - 1].GetColor();
+        if (stickmans.Count != 0)
+            return stickmans[stickmans.Count - 1].GetColor();
+        else
+            return Colors.None;
     }
 
     public int GetNextPositionIndex()
@@ -141,5 +145,15 @@ public class Platform : MonoBehaviour
         mats[0] = _colorPalette.GetMaterialFromColor(color); ;
         _flagMeshRenderer.materials = mats;
         _flag.SetActive(true);
+    }
+
+    public void ClearStickmans()
+    {
+        for (int i = 0; i < stickmans.Count; i++)
+        {
+            LeanPool.Despawn(stickmans[i]);
+        }
+
+        stickmans.Clear();
     }
 }

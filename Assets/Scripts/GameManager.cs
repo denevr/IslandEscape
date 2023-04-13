@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
         int levelIndex = PlayerPrefs.GetInt(PlayerPrefsConstants.playerLevel, 0);
         levelManager.StartLevel(levelIndex);
+        UIManager.Initialize();
         inputManager.isInputEnabled = true;
     }
 }

@@ -75,9 +75,18 @@ public class LevelManager : MonoBehaviour
 
     public void PlayNextLevel()
     {
+        //clean scene
+        //for (int i = 0; i < _platformsInLevel.Count; i++)
+        //{
+        //    //LeanPool.Despawn(_platformsInLevel[i].stickmans);
+        //    _platformsInLevel[i].ClearStickmans();
+        //}
+        LeanPool.DespawnAll();
+
         int levelIndex = PlayerPrefs.GetInt(PlayerPrefsConstants.playerLevel, 0);
         levelIndex++;
         PlayerPrefs.SetInt(PlayerPrefsConstants.playerLevel, levelIndex);
         StartLevel(levelIndex);
     }
+
 }
