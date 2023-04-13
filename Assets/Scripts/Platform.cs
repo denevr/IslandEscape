@@ -7,18 +7,23 @@ public class Platform : MonoBehaviour
     public Transform[] stickmanPositions;
     public List<Stickman> stickmans;
     //public Stack<Stickman> stickmanStack;
-    public bool isCompleted;
+    //public bool isCompleted;
 
     [SerializeField] private Transform _bridgeConnectionPoint;
+    [SerializeField] private GameObject _flag;
+    [SerializeField] private MeshRenderer _flagMeshRenderer;
+    [SerializeField] private ColorPalette _colorPalette;
 
     private bool isSelected; //
     private LineRenderer _lineRenderer;
+    private BoxCollider _boxCollider;
     private const int lengthOfLineRenderer = 2;
     private readonly Vector3 offsetVector = new Vector3(0, .25f, 0);
 
     void Awake()
     {
         _lineRenderer = GetComponent<LineRenderer>();
+        _boxCollider = GetComponent<BoxCollider>();
     }
 
     void OnEnable()
@@ -26,9 +31,11 @@ public class Platform : MonoBehaviour
         //stickmans = new Stickman[stickmanPositions.Length];
         stickmans = new List<Stickman>();
         //stickmanStack = new Stack<Stickman>();
-        isCompleted = false;
+        //isCompleted = false;
         isSelected = false;
         _lineRenderer.enabled = false;
+        _boxCollider.enabled = true;
+        _flag.SetActive(false);
     }
 
     public void OnSelected()
@@ -107,5 +114,37 @@ public class Platform : MonoBehaviour
         }
 
         return -1;
+    }
+
+    public void AddStickmanToPlatform(Stickman stickman)
+    {
+        stickmans.Add(stickman);
+    }
+
+    public bool IsFullyLoadedWithStickmansOfSameColor()
+    {
+        if (stickmans.Count != stickmanPositions.Length) return false;
+
+        var color = GetLastStickmanColor();
+
+        for (int i = 0; i < stickmans.Count; i++)
+        {
+            if (stickmans[i].GetColor() != color)
+                return false;
+        }
+
+        return true;
+    }
+
+    public void Lock()
+    {
+        _boxCollider.enabled = false;
+
+        var color = GetLastStickmanColor();
+        //var mat = _colorPalette.GetMaterialFromColor(color);
+        var mats = _flagMeshRenderer.materials;
+        mats[0] = _colorPalette.GetMaterialFromColor(color); ;
+        _flagMeshRenderer.materials = mats;
+        _flag.SetActive(true);
     }
 }

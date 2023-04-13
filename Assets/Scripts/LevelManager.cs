@@ -11,19 +11,21 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject _water;
     [SerializeField] private Platform _platformPrefab;
     [SerializeField] private GameObject _stickmanPrefab;
-
     [SerializeField] private Transform _platformParent;
 
+    private List<Platform> _platformsInLevel;
     private const int stickmanCountInLine = 4;
 
     void Start()
     {
         _water.SetActive(true);
+        _platformsInLevel = new List<Platform>();
     }
 
     public void StartLevel(int levelIndex)
     {
         LevelData levelData = levelDatas.Find((x) => x.Id == levelIndex);
+        _platformsInLevel.Clear();
 
         var platformCount = levelData.PlatformDatas.Length;
 
@@ -36,6 +38,7 @@ public class LevelManager : MonoBehaviour
         var platform = LeanPool.Spawn(_platformPrefab, _platformParent);
         platform.transform.position = platformData.Position;
         platform.transform.rotation = platformData.Rotation;
+        _platformsInLevel.Add(platform);
 
         var platformColorCount = platformData.Colors.Length;
         var index = 0;
@@ -64,5 +67,18 @@ public class LevelManager : MonoBehaviour
                 count--;
             }
         }
+    }
+
+    public List<Platform> GetPlatformsInLevel()
+    {
+        return _platformsInLevel;
+    }
+
+    public void PlayNextLevel()
+    {
+        int levelIndex = PlayerPrefs.GetInt(PlayerPrefsConstants.playerLevel, 0);
+        levelIndex++;
+        PlayerPrefs.SetInt(PlayerPrefsConstants.playerLevel, levelIndex);
+        StartLevel(levelIndex);
     }
 }
