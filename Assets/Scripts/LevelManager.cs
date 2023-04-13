@@ -49,6 +49,7 @@ public class LevelManager : MonoBehaviour
             {
                 var go = LeanPool.Spawn(_stickmanPrefab, platform.stickmanPositions[index]);
                 go.transform.position = platform.stickmanPositions[index].position;
+                go.transform.localRotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
 
                 var stickman = go.GetComponent<Stickman>();
                 var mat = _colorPalette.GetMaterialFromColor(color);

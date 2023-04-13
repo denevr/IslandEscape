@@ -6,6 +6,7 @@ using DG.Tweening;
 public class StickmanFlowController : MonoBehaviour
 {
     private Vector3 offset = new Vector3(0, .25f, 0);
+    private float _speed = 3f;
 
     public bool IsFlowAvailableBetween(Platform startPlatform, Platform endPlatform)
     {
@@ -23,35 +24,47 @@ public class StickmanFlowController : MonoBehaviour
     public void StartFlowBetween(Platform startPlatform, Platform endPlatform)
     {
         var stickmans = startPlatform.GetTransferableStickmans();
+        //var startPos = startPlatform.GetConnectionPoint() + offset;
+        //var endPos = endPlatform.GetConnectionPoint() + offset;
+
+        //for (int i = 0; i < stickmans.Count; i++)
+        //{
+        //    var placementPos = endPlatform.stickmanPositions[endPlatform.GetNextPositionIndex()];
+        //    StartCoroutine(MoveStickman(stickmans[i], startPos, endPos, placementPos, i / 2));
+        //}
+
+        StartCoroutine(MoveStickmans(stickmans, startPlatform, endPlatform));
+    }
+
+    private IEnumerator MoveStickmans(List<Stickman> stickmans, Platform startPlatform, Platform endPlatform)
+    {
         var startPos = startPlatform.GetConnectionPoint() + offset;
         var endPos = endPlatform.GetConnectionPoint() + offset;
 
         for (int i = 0; i < stickmans.Count; i++)
         {
             var placementPos = endPlatform.stickmanPositions[endPlatform.GetNextPositionIndex()];
-            StartCoroutine(MoveStickman(stickmans[i], startPos, endPos, placementPos));
+            var stickman = stickmans[i];
+            stickman.transform.SetParent(placementPos);
+
+            Vector3[] path = new[] { stickman.transform.position, startPos, endPos, placementPos.position };
+
+            //float duration = i * .15f;
+            float duration = .15f;
+            yield return new WaitForSeconds(duration);
+
+            stickman.Run();
+            var distance = Vector3.Distance(startPos, endPos);
+            stickman.transform.DOPath(path, distance / _speed)
+                .SetLookAt(.01f, -Vector3.forward)
+                //.SetSpeedBased(true)
+                .SetEase(Ease.Linear).OnComplete(() =>
+                {
+                    stickman.transform.localRotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
+                    stickman.Idle();
+                });
         }
-    }
 
-    private IEnumerator MoveStickman(Stickman stickman, Vector3 startPos, Vector3 endPos, Transform placementPos)
-    {
-        //animation
-        //async
-        //direction facing
-        //movement duration
-        //rotate according to target platform
-        stickman.Run();
-        stickman.transform.SetParent(placementPos);
-
-        yield return new WaitForSeconds(.5f);
-
-        stickman.transform.DOMove(startPos, .25f).OnComplete(() =>
-        {
-            stickman.transform.DOMove(endPos, .75f).OnComplete(() =>
-            {
-                stickman.transform.DOMove(placementPos.position, .25f);
-                stickman.Idle();
-            });
-        });
+        //deconstruct bridge + enable input + add newcomer stickmans to new platforms stickmans
     }
 }
