@@ -116,7 +116,7 @@ public class Platform : MonoBehaviour
         stickmans.Add(stickman);
     }
 
-    public void RemoveStickmanToPlatform(Stickman stickman)
+    public void RemoveStickmanFromPlatform(Stickman stickman)
     {
         stickmans.Remove(stickman);
     }

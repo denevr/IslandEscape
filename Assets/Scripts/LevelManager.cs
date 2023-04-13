@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     public List<LevelData> levelDatas;
 
+    [SerializeField] private UIManager UIManager;
     [SerializeField] private ColorPalette _colorPalette;
     [SerializeField] private GameObject _water;
     [SerializeField] private Platform _platformPrefab;
@@ -25,6 +26,7 @@ public class LevelManager : MonoBehaviour
     public void StartLevel(int levelIndex)
     {
         LevelData levelData = levelDatas.Find((x) => x.Id == levelIndex);
+        UIManager.ShowHomePanel();
         _platformsInLevel.Clear();
 
         var platformCount = levelData.PlatformDatas.Length;
@@ -89,4 +91,11 @@ public class LevelManager : MonoBehaviour
         StartLevel(levelIndex);
     }
 
+    public void RestartLevel()
+    {
+        LeanPool.DespawnAll();
+
+        int levelIndex = PlayerPrefs.GetInt(PlayerPrefsConstants.playerLevel, 0);
+        StartLevel(levelIndex);
+    }
 }

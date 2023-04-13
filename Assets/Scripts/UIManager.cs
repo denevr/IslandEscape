@@ -20,6 +20,11 @@ public class UIManager : MonoBehaviour
         _homePanel.Show();
     }
 
+    public void ShowHomePanel()
+    {
+        _homePanel.Show();
+    }
+
     public void ShowLevelEndPanel()
     {
         _homePanel.Hide();

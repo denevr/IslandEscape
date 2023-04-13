@@ -10,8 +10,9 @@ public class StickmanFlowController : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private UIManager UIManager;
 
+    private Coroutine _coroutine;
     private Vector3 offset = new Vector3(0, .25f, 0);
-    private float _speed = 3f;
+    private readonly float _speed = 3f;
 
     public bool IsFlowAvailableBetween(Platform startPlatform, Platform endPlatform)
     {
@@ -30,7 +31,7 @@ public class StickmanFlowController : MonoBehaviour
     public void StartFlowBetween(Platform startPlatform, Platform endPlatform)
     {
         var stickmans = startPlatform.GetTransferableStickmans();
-        StartCoroutine(MoveStickmans(stickmans, startPlatform, endPlatform));
+        _coroutine = StartCoroutine(MoveStickmans(stickmans, startPlatform, endPlatform));
     }
 
     private IEnumerator MoveStickmans(List<Stickman> stickmans, Platform startPlatform, Platform endPlatform)
@@ -45,7 +46,7 @@ public class StickmanFlowController : MonoBehaviour
             var placementPos = endPlatform.stickmanPositions[endPlatform.GetNextPositionIndex()];
             var stickman = stickmans[i];
             stickman.transform.SetParent(placementPos);
-            startPlatform.RemoveStickmanToPlatform(stickman);
+            startPlatform.RemoveStickmanFromPlatform(stickman);
             endPlatform.AddStickmanToPlatform(stickman);
             Vector3[] path = new[] { stickman.transform.position, startPos, endPos, placementPos.position };
 
@@ -65,6 +66,7 @@ public class StickmanFlowController : MonoBehaviour
                     if (stickmansMoved == stickmansToMove)
                     {
                         _bridgeController.RemoveBridgeBetween(startPlatform, endPlatform);
+                        inputManager.isInputEnabled = true;
                         CheckLevelEnd();
                     }
                 });
@@ -93,5 +95,15 @@ public class StickmanFlowController : MonoBehaviour
         }
 
         UIManager.ShowLevelEndPanel();
+    }
+
+    public void UndoLastMove()
+    {
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+
+
+        }
     }
 }

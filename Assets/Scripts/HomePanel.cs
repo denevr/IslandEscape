@@ -5,6 +5,9 @@ using TMPro;
 
 public class HomePanel : UIPanel
 {
+    [SerializeField] private UIManager UIManager;
+    [SerializeField] private LevelManager levelManager;
+    [SerializeField] private StickmanFlowController stickmanFlowController;
     [SerializeField] private TextMeshProUGUI _levelText;
 
     void OnEnable()
@@ -13,9 +16,18 @@ public class HomePanel : UIPanel
         _levelText.text = "Level " + (levelIndex + 1);
     }
 
-    void Start()
+    public void OnUndoLastMoveButtonTapped()
     {
-
+        stickmanFlowController.UndoLastMove();
     }
 
+    public void OnRestartLevelButtonTapped()
+    {
+        levelManager.RestartLevel();
+    }
+
+    public void OnPassLevelButtonTapped()
+    {
+        UIManager.ShowLevelEndPanel();
+    }
 }

@@ -44,7 +44,7 @@ public class InputManager : MonoBehaviour
                         {
                             if (!_stickmanFlowController.IsFlowAvailableBetween(_selectedPlatform, platform)) return;
 
-                            //isInputEnabled = false;
+                            isInputEnabled = false;
                             _selectedPlatform.OnDeselected();
                             _bridgeController.CreateBridgeBetween(_selectedPlatform, platform);
                             _stickmanFlowController.StartFlowBetween(_selectedPlatform, platform);
