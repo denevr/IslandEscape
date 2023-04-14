@@ -9,6 +9,7 @@ public class StickmanFlowController : MonoBehaviour
     [SerializeField] private InputManager inputManager;
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private UIManager UIManager;
+    //[SerializeField] private ActionRecorder _actionRecorder;
 
     private Coroutine _coroutine;
     private Vector3 offset = new Vector3(0, .25f, 0);
@@ -99,11 +100,10 @@ public class StickmanFlowController : MonoBehaviour
 
     public void UndoLastMove()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
+        //if (_coroutine != null)
+        //{
+        //    StopCoroutine(_coroutine);
 
-
-        }
+        //}
     }
 }

@@ -8,6 +8,7 @@ public class HomePanel : UIPanel
     [SerializeField] private UIManager UIManager;
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private StickmanFlowController stickmanFlowController;
+    [SerializeField] private ActionRecorder _actionRecorder;
     [SerializeField] private TextMeshProUGUI _levelText;
 
     void OnEnable()
@@ -18,7 +19,8 @@ public class HomePanel : UIPanel
 
     public void OnUndoLastMoveButtonTapped()
     {
-        stickmanFlowController.UndoLastMove();
+        //stickmanFlowController.UndoLastMove();
+        _actionRecorder.Rewind();
     }
 
     public void OnRestartLevelButtonTapped()
