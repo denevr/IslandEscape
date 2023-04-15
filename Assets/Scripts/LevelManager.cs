@@ -17,10 +17,14 @@ public class LevelManager : MonoBehaviour
     private List<Platform> _platformsInLevel;
     private const int stickmanCountInLine = 4;
 
+    private void OnEnable()
+    {
+        _platformsInLevel = new List<Platform>();
+    }
+
     void Start()
     {
         _water.SetActive(true);
-        _platformsInLevel = new List<Platform>();
     }
 
     public void StartLevel(int levelIndex)

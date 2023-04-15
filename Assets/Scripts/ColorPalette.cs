@@ -24,6 +24,7 @@ public class ColorPalette : MonoBehaviour
     [SerializeField] private Material _redMaterial;
     [SerializeField] private Material _orangeMaterial;
     [SerializeField] private Material _purpleMaterial;
+    [SerializeField] private Material _defaultMaterial;
 
     public Material GetMaterialFromColor(Colors color)
     {
@@ -43,7 +44,7 @@ public class ColorPalette : MonoBehaviour
                 return _purpleMaterial;
 
             default:
-                return _blueMaterial;
+                return _defaultMaterial;
         }
     }
 

@@ -35,8 +35,9 @@ public class Platform : MonoBehaviour
         //isCompleted = false;
         isSelected = false;
         _lineRenderer.enabled = false;
-        _boxCollider.enabled = true;
-        _flag.SetActive(false);
+        Unlock();
+        //_boxCollider.enabled = true;
+        //_flag.SetActive(false);
     }
 
     public void OnSelected()
@@ -145,6 +146,17 @@ public class Platform : MonoBehaviour
         mats[0] = _colorPalette.GetMaterialFromColor(color); ;
         _flagMeshRenderer.materials = mats;
         _flag.SetActive(true);
+    }
+
+    public void Unlock()
+    {
+        _boxCollider.enabled = true;
+
+        var color = GetLastStickmanColor();
+        var mats = _flagMeshRenderer.materials;
+        mats[0] = _colorPalette.GetMaterialFromColor(color); ;
+        _flagMeshRenderer.materials = mats;
+        _flag.SetActive(false);
     }
 
     public void ClearStickmans()
