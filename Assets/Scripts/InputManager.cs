@@ -62,7 +62,7 @@ public class InputManager : MonoBehaviour
                     
                     if (hit.transform.gameObject.tag == "Player")
                     {
-                        Debug.LogError("undo");
+                        //Debug.LogError("undo");
                         _stickmanFlowController.UndoLastMove();
                     }
                     else

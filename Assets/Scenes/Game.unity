@@ -1029,6 +1029,7 @@ MonoBehaviour:
   _platformPrefab: {fileID: 7860244227216861701, guid: b3d040b334ea4b84e971624203c584e6, type: 3}
   _stickmanPrefab: {fileID: 4403176042765711085, guid: ce726c9c09c151a49bdaed9e224cac77, type: 3}
   _platformParent: {fileID: 1468863380}
+  _stickmanFlowController: {fileID: 1190045798}
 --- !u!114 &1534440650
 MonoBehaviour:
   m_ObjectHideFlags: 0

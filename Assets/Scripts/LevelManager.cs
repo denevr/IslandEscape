@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Platform _platformPrefab;
     [SerializeField] private GameObject _stickmanPrefab;
     [SerializeField] private Transform _platformParent;
+    [SerializeField] private StickmanFlowController _stickmanFlowController;
 
     private List<Platform> _platformsInLevel;
     private const int stickmanCountInLine = 4;
@@ -32,6 +33,7 @@ public class LevelManager : MonoBehaviour
         LevelData levelData = levelDatas.Find((x) => x.Id == levelIndex);
         UIManager.ShowHomePanel();
         _platformsInLevel.Clear();
+        _stickmanFlowController.ResetActionData();
 
         var platformCount = levelData.PlatformDatas.Length;
 
