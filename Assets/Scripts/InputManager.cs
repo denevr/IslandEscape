@@ -59,8 +59,17 @@ public class InputManager : MonoBehaviour
                 }
                 else
                 {
-                    _selectedPlatform.OnDeselected();
-                    _selectedPlatform = null;
+                    
+                    if (hit.transform.gameObject.tag == "Player")
+                    {
+                        Debug.LogError("undo");
+                        _stickmanFlowController.UndoLastMove();
+                    }
+                    else
+                    {
+                        _selectedPlatform.OnDeselected();
+                        _selectedPlatform = null;
+                    }
                 }
             }
         }

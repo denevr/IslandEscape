@@ -10,8 +10,13 @@ public class StickmanFlowController : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private UIManager UIManager;
 
+    //private List<Stickman> _movingStickmans = new List<Stickman>(); //reset these on level start
+    private Stack<Stickman> _movingStickmans = new Stack<Stickman>(); //reset these on level start
+    private Stack<Platform> _platformsConnected = new Stack<Platform>();
+    private Platform _fromPlatform, _toPlatform;
     private Coroutine _coroutine;
     private Vector3 offset = new Vector3(0, .25f, 0);
+    private int _movedStickmanCountOnTheLastMove; //
     private readonly float _speed = 3f;
 
     public bool IsFlowAvailableBetween(Platform startPlatform, Platform endPlatform)
@@ -31,6 +36,27 @@ public class StickmanFlowController : MonoBehaviour
     public void StartFlowBetween(Platform startPlatform, Platform endPlatform)
     {
         var stickmans = startPlatform.GetTransferableStickmans();
+
+        //_movingStickmans.Clear();
+        var stickmansToMove = stickmans.Count;
+        _movedStickmanCountOnTheLastMove = stickmansToMove; //no need for a new variable?
+        //SetDataBeforeFlow(startPlatform, endPlatform);
+        //_fromPlatform = startPlatform;
+        //_toPlatform = endPlatform;
+        _platformsConnected.Push(startPlatform);
+        _platformsConnected.Push(endPlatform);
+
+        for (int i = 0; i < stickmansToMove; i++)
+        {
+            var placementPos = endPlatform.stickmanPositions[endPlatform.GetNextPositionIndex()];
+            var stickman = stickmans[i];
+            //_movingStickmans.Add(stickman);
+            _movingStickmans.Push(stickman);
+            //stickman.transform.SetParent(placementPos);
+            startPlatform.RemoveStickmanFromPlatform(stickman);
+            endPlatform.AddStickmanToPlatform(stickman);
+        }
+
         _coroutine = StartCoroutine(MoveStickmans(stickmans, startPlatform, endPlatform));
     }
 
@@ -43,11 +69,13 @@ public class StickmanFlowController : MonoBehaviour
 
         for (int i = 0; i < stickmansToMove; i++)
         {
+            //Debug.LogError(stickmansToMove);
+            //Debug.LogError(endPlatform.GetNextPositionIndex());
             var placementPos = endPlatform.stickmanPositions[endPlatform.GetNextPositionIndex()];
             var stickman = stickmans[i];
             stickman.transform.SetParent(placementPos);
-            startPlatform.RemoveStickmanFromPlatform(stickman);
-            endPlatform.AddStickmanToPlatform(stickman);
+            //startPlatform.RemoveStickmanFromPlatform(stickman);
+            //endPlatform.AddStickmanToPlatform(stickman);
             Vector3[] path = new[] { stickman.transform.position, startPos, endPos, placementPos.position };
 
             float duration = .15f;
@@ -97,13 +125,51 @@ public class StickmanFlowController : MonoBehaviour
         UIManager.ShowLevelEndPanel();
     }
 
+    //public void SetDataBeforeFlow(Platform startPlatform, Platform endPlatform)
+    //{
+    //    _fromPlatform = startPlatform;
+    //    _toPlatform = endPlatform;
+
+
+    //}
+
     public void UndoLastMove()
     {
         if (_coroutine != null)
-        {
             StopCoroutine(_coroutine);
 
+        if (_movingStickmans.Count != 0 && 
+            _movingStickmans.Count >= _movedStickmanCountOnTheLastMove &&
+            _platformsConnected.Count >= 2)
+        {
+            //Debug.LogError(_platformsConnected.Count);
+            Platform toPlatform = _platformsConnected.Pop();
+            Platform fromPlatform = _platformsConnected.Pop();
 
+            for (int i = 0; i < _movedStickmanCountOnTheLastMove; i++)
+            {
+                var stickman = _movingStickmans.Pop();
+                var placementPos = fromPlatform.stickmanPositions[fromPlatform.GetNextPositionIndex()];
+
+                stickman.transform.SetParent(placementPos);
+                stickman.transform.position = placementPos.position;
+                stickman.transform.localRotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
+                toPlatform.RemoveStickmanFromPlatform(stickman);
+                fromPlatform.AddStickmanToPlatform(stickman);
+
+
+                //var stickman = _movingStickmans[i];
+                //var placementPos = _fromPlatform.stickmanPositions[_fromPlatform.GetNextPositionIndex()];
+
+                //stickman.transform.SetParent(placementPos);
+                //stickman.transform.position = placementPos.position;
+                //stickman.transform.localRotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
+                //_toPlatform.RemoveStickmanFromPlatform(stickman);
+                //_fromPlatform.AddStickmanToPlatform(stickman);
+            }
+
+            //_toPlatform.Unlock();
+            toPlatform.Unlock();
         }
     }
 }
