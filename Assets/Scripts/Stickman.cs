@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Stickman : MonoBehaviour
 {
-    //public Color color;
     [SerializeField] private SkinnedMeshRenderer _smr;
     [SerializeField] private Animator _animator;
 

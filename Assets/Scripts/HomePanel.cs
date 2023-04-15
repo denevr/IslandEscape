@@ -21,7 +21,6 @@ public class HomePanel : UIPanel
 
     public void OnUndoLastMoveButtonTapped()
     {
-        //stickmanFlowController.UndoLastMove();
         _actionRecorder.Rewind();
     }
 

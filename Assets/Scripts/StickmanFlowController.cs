@@ -10,12 +10,11 @@ public class StickmanFlowController : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private UIManager UIManager;
 
-    private Stack<Stickman> _movingStickmans = new Stack<Stickman>(); //reset these on level start
+    private Stack<Stickman> _movingStickmans = new Stack<Stickman>();
     private Stack<Platform> _platformsConnected = new Stack<Platform>();
     private Stack<int> _stickmansRelocatedInEveryMove = new Stack<int>();
     private Coroutine _coroutine;
     private Vector3 offset = new Vector3(0, .25f, 0);
-    private int _movedStickmanCountOnTheLastMove; //
     private readonly float _speed = 3f;
 
     public bool IsFlowAvailableBetween(Platform startPlatform, Platform endPlatform)
@@ -37,7 +36,6 @@ public class StickmanFlowController : MonoBehaviour
         var stickmans = startPlatform.GetTransferableStickmans();
 
         var stickmansToMove = stickmans.Count;
-        //_movedStickmanCountOnTheLastMove = stickmansToMove; //no need for a new variable?
         _stickmansRelocatedInEveryMove.Push(stickmansToMove);
         _platformsConnected.Push(startPlatform);
         _platformsConnected.Push(endPlatform);
@@ -91,12 +89,7 @@ public class StickmanFlowController : MonoBehaviour
         }
 
         if (endPlatform.IsFullyLoadedWithStickmansOfSameColor())
-        {
             endPlatform.Lock();
-            //CheckLevelEnd();
-        }
-
-        //inputManager.isInputEnabled = true;
     }
 
     public void CheckLevelEnd()
@@ -121,12 +114,12 @@ public class StickmanFlowController : MonoBehaviour
             return;
 
         if (_coroutine != null)
+        {
+            DOTween.KillAll();
             StopCoroutine(_coroutine);
+        }
 
         var count = _stickmansRelocatedInEveryMove.Peek();
-        Debug.LogError("_movingStickmans.Count: " + _movingStickmans.Count);
-        //Debug.LogError("_platformsConnected.Count: " + _platformsConnected.Count);
-        Debug.LogError("count: " + count);
 
         if (_movingStickmans.Count != 0 && 
             _movingStickmans.Count >= count &&
@@ -135,13 +128,12 @@ public class StickmanFlowController : MonoBehaviour
             Platform toPlatform = _platformsConnected.Pop();
             Platform fromPlatform = _platformsConnected.Pop();
             var stickmansToRelocate = _stickmansRelocatedInEveryMove.Pop();
-            Debug.LogError("stickmansToRelocate: " + stickmansToRelocate);
 
             for (int i = 0; i < stickmansToRelocate; i++)
             {
                 var stickman = _movingStickmans.Pop();
                 var placementPos = fromPlatform.stickmanPositions[fromPlatform.GetNextPositionIndex()];
-
+                stickman.Idle();
                 stickman.transform.SetParent(placementPos);
                 stickman.transform.position = placementPos.position;
                 stickman.transform.localRotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
@@ -151,6 +143,7 @@ public class StickmanFlowController : MonoBehaviour
 
             _bridgeController.RemoveBridgeBetween(fromPlatform, toPlatform);
             toPlatform.Unlock();
+            inputManager.isInputEnabled = true;
         }
     }
 

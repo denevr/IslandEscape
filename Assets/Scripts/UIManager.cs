@@ -28,7 +28,6 @@ public class UIManager : MonoBehaviour
     public void ShowLevelEndPanel()
     {
         _homePanel.Hide();
-        //inputManager.isInputEnabled = false; //check if needed?
         _levelEndPanel.Show();
     }
 

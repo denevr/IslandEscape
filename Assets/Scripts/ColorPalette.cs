@@ -15,9 +15,6 @@ public enum Colors
 
 public class ColorPalette : MonoBehaviour
 {
-    //public Color[] colors;
-
-    //header
     [SerializeField] private Material _blueMaterial;
     [SerializeField] private Material _greenMaterial;
     [SerializeField] private Material _yellowMaterial;

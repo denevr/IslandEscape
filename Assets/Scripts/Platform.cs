@@ -7,15 +7,12 @@ public class Platform : MonoBehaviour
 {
     public Transform[] stickmanPositions;
     public List<Stickman> stickmans;
-    //public Stack<Stickman> stickmanStack;
-    //public bool isCompleted;
 
     [SerializeField] private Transform _bridgeConnectionPoint;
     [SerializeField] private GameObject _flag;
     [SerializeField] private MeshRenderer _flagMeshRenderer;
     [SerializeField] private ColorPalette _colorPalette;
 
-    private bool isSelected; //
     private LineRenderer _lineRenderer;
     private BoxCollider _boxCollider;
     private const int lengthOfLineRenderer = 2;
@@ -29,20 +26,13 @@ public class Platform : MonoBehaviour
 
     void OnEnable()
     {
-        //stickmans = new Stickman[stickmanPositions.Length];
         stickmans = new List<Stickman>();
-        //stickmanStack = new Stack<Stickman>();
-        //isCompleted = false;
-        isSelected = false;
         _lineRenderer.enabled = false;
         Unlock();
-        //_boxCollider.enabled = true;
-        //_flag.SetActive(false);
     }
 
     public void OnSelected()
     {
-        isSelected = true;
         var pos = transform.position;
         pos.y += .5f;
         transform.position = pos;
@@ -50,7 +40,6 @@ public class Platform : MonoBehaviour
 
     public void OnDeselected()
     {
-        isSelected = false;
         var pos = transform.position;
         pos.y -= .5f;
         transform.position = pos;
