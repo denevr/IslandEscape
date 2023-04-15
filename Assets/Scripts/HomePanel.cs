@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class HomePanel : UIPanel
 {
@@ -9,6 +10,8 @@ public class HomePanel : UIPanel
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private StickmanFlowController stickmanFlowController;
     [SerializeField] private TextMeshProUGUI _levelText;
+    [SerializeField] private Button _undoButton;
+    [SerializeField] private ActionRecorder _actionRecorder;
 
     void OnEnable()
     {
@@ -18,7 +21,8 @@ public class HomePanel : UIPanel
 
     public void OnUndoLastMoveButtonTapped()
     {
-        stickmanFlowController.UndoLastMove();
+        //stickmanFlowController.UndoLastMove();
+        _actionRecorder.Rewind();
     }
 
     public void OnRestartLevelButtonTapped()
@@ -29,5 +33,10 @@ public class HomePanel : UIPanel
     public void OnPassLevelButtonTapped()
     {
         UIManager.ShowLevelEndPanel();
+    }
+
+    public void EnableUndoButton(bool flag)
+    {
+        _undoButton.interactable = flag;
     }
 }

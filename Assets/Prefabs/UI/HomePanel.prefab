@@ -87,7 +87,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3592927824919473427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,7 +119,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManager: {fileID: 0}
   levelManager: {fileID: 0}
+  stickmanFlowController: {fileID: 0}
   _levelText: {fileID: 7554947042219055138}
+  _undoButton: {fileID: 6523055513277689200}
+  _actionRecorder: {fileID: 0}
 --- !u!1 &654921308007130925
 GameObject:
   m_ObjectHideFlags: 0

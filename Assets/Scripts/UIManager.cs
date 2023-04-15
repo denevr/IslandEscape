@@ -31,4 +31,9 @@ public class UIManager : MonoBehaviour
         //inputManager.isInputEnabled = false; //check if needed?
         _levelEndPanel.Show();
     }
+
+    public void SetInteractabilityUndoButton(bool flag)
+    {
+        _homePanel.EnableUndoButton(flag);
+    }
 }

@@ -117,9 +117,11 @@ public class StickmanFlowController : MonoBehaviour
 
     public void UndoLastMove()
     {
+        if (_stickmansRelocatedInEveryMove.Count == 0) 
+            return;
+
         if (_coroutine != null)
             StopCoroutine(_coroutine);
-        if (_stickmansRelocatedInEveryMove.Count == 0) return;
 
         var count = _stickmansRelocatedInEveryMove.Peek();
         Debug.LogError("_movingStickmans.Count: " + _movingStickmans.Count);
@@ -133,6 +135,7 @@ public class StickmanFlowController : MonoBehaviour
             Platform toPlatform = _platformsConnected.Pop();
             Platform fromPlatform = _platformsConnected.Pop();
             var stickmansToRelocate = _stickmansRelocatedInEveryMove.Pop();
+            Debug.LogError("stickmansToRelocate: " + stickmansToRelocate);
 
             for (int i = 0; i < stickmansToRelocate; i++)
             {
@@ -146,6 +149,7 @@ public class StickmanFlowController : MonoBehaviour
                 fromPlatform.AddStickmanToPlatform(stickman);
             }
 
+            _bridgeController.RemoveBridgeBetween(fromPlatform, toPlatform);
             toPlatform.Unlock();
         }
     }

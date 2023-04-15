@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private BridgeController _bridgeController;
     [SerializeField] private StickmanFlowController _stickmanFlowController;
+    [SerializeField] private ActionRecorder _actionRecorder;
 
     private Platform _selectedPlatform;
 
@@ -47,7 +48,12 @@ public class InputManager : MonoBehaviour
                             isInputEnabled = false;
                             _selectedPlatform.OnDeselected();
                             _bridgeController.CreateBridgeBetween(_selectedPlatform, platform);
-                            _stickmanFlowController.StartFlowBetween(_selectedPlatform, platform);
+                            //
+                            var action = new StickmanFlowAction(_stickmanFlowController, _selectedPlatform, platform);
+                            _actionRecorder.Record(action);
+                            //
+
+                            //_stickmanFlowController.StartFlowBetween(_selectedPlatform, platform);
                             _selectedPlatform = null;
                         }
                         else
@@ -60,16 +66,19 @@ public class InputManager : MonoBehaviour
                 else
                 {
                     
-                    if (hit.transform.gameObject.tag == "Player")
-                    {
-                        //Debug.LogError("undo");
-                        _stickmanFlowController.UndoLastMove();
-                    }
-                    else
-                    {
-                        _selectedPlatform.OnDeselected();
-                        _selectedPlatform = null;
-                    }
+                    //if (hit.transform.gameObject.tag == "Player")
+                    //{
+                    //    //Debug.LogError("undo");
+                    //    _stickmanFlowController.UndoLastMove();
+                    //}
+                    //else
+                    //{
+                        if (_selectedPlatform != null)
+                        {
+                            _selectedPlatform.OnDeselected();
+                            _selectedPlatform = null;
+                        }
+                    //}
                 }
             }
         }
